@@ -150,9 +150,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="UsefullFunc.h" />
     <ClInclude Include="vDefinition.h" />
     <ClInclude Include="vFraction.h" />
     <ClInclude Include="vFunc.h" />
+    <ClInclude Include="vNumber.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

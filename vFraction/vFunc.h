@@ -16,13 +16,17 @@ public:
 		return issame(other);
 	}
 	inline vFunc(const std::string &name,const std::string &symbol) : m_symbol{symbol} , m_name{name} ,m_id{std::hash<std::string>()(name)}{}
-	template<class T>
 	inline T operator()(const T &a, const T &b)
 	{
-		return func(a, b);
+		return func2arg(a, b);
+	}
+	inline T operator()(const T &a)
+	{
+		return func1arg(a);
 	}
 
-	virtual T func(const T &a, const T &b) = 0;
+	inline virtual T func2arg(const T &a, const T &b) = 0 {}
+	inline virtual T func1arg(const T &a) = 0 {}
 	~vFunc()
 	{
 	}

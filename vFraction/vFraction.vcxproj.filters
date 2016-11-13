@@ -13,19 +13,22 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\vFunc">
-      <UniqueIdentifier>{c8957ee4-0621-40e2-a76d-5c01c2400acc}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vFraction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vFunc.h">
-      <Filter>Header Files\vFunc</Filter>
+    <ClInclude Include="vNumber.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UsefullFunc.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vDefinition.h">
-      <Filter>Header Files\vFunc</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vFunc.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

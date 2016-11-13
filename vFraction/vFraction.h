@@ -1,15 +1,8 @@
 #pragma once
 #include <cassert>
 #include <iostream>
+#include "UsefullFunc.h"
 
-template<class T>
-inline T abs(const T &a);
-template<class T>
-inline T getGcd(T a, T b);
-template<class T>
-inline T strto(const char* str, const size_t &strlen);
-template<class T,T x>
-T pow(size_t n);
 
 class vFraction
 {
@@ -20,6 +13,7 @@ public:
 	inline vFraction(const std::string &str)
 	{
 		char buffer[50]{};
+		bool test{ false };
 		size_t i{ 0 };
 		for (auto temp : str)
 		{
@@ -30,11 +24,18 @@ public:
 			}
 			else if (temp == '/')
 			{
-				this->setNum(strto<long>(buffer, i));
+				this->setNum(utlity::strto<long>(buffer, i));
+				test = true;
 				i = 0;
 			}
 		}
-		this->setDen(strto<long>(buffer, i));
+		if(test)
+			this->setDen(utlity::strto<long>(buffer, i));
+		else
+		{
+			this->setNum(utlity::strto<long>(buffer, i));
+			this->setDen(1);
+		}
 		setThisIrrational();
 	}
 	inline vFraction(const long &num, const long &den) // create fraction num/den if den = 0 : assert
@@ -101,7 +102,7 @@ public:
 	}
 	static inline vFraction setIrrational(const vFraction &frac)
 	{
-		long gcd{ getGcd<long>(abs<long>(frac.den()),abs<long>(frac.num())) };
+		long gcd{ utlity::getGcd<long>(utlity::abs<long>(frac.den()),utlity::abs<long>(frac.num())) };
 		return vFraction(frac.num() / gcd, frac.den() / gcd);
 	}
 	inline void setDen(const long &den) {
@@ -216,7 +217,7 @@ public:
 private:
 	inline void setThisIrrational()
 	{
-		long gcd{ getGcd<long>(abs<long>(this->m_den),abs<long>(this->m_num)) };
+		long gcd{ utlity::getGcd<long>(utlity::abs<long>(this->m_den),utlity::abs<long>(this->m_num)) };
 		this->m_den = this->m_den / gcd;
 		this->m_num = this->m_num / gcd;
 	}
@@ -224,16 +225,6 @@ private:
 	unsigned long m_den;
 };
 
-template<class T>
-inline T abs(const T &a)
-{
-	return (a < 0) ? -a:a;
-}
-template<class T>
-inline T getGcd(T a, T b)
-{
-	return (b == 0)? a : getGcd(b, a % b); 
-}
 
 inline std::ostream& operator<<(std::ostream& os, const vFraction &frac)
 {
@@ -251,6 +242,7 @@ inline std::istream& operator >> (std::istream& is, vFraction &frac)
 {
 	char temp[1]{};
 	char buffer[50]{};
+	bool test{ false };
 	size_t i{ 0 };
 	while (is.read(temp, 1))
 	{
@@ -261,37 +253,25 @@ inline std::istream& operator >> (std::istream& is, vFraction &frac)
 		}
 		else if (*temp == '/')
 		{
-			frac.setNum(strto<long>(buffer, i));
+			frac.setNum(utlity::strto<long>(buffer, i));
+			test = true;
 			i = 0;
 		}
-		else if(*temp != '+')
-		{
-			is.setstate(std::ios::failbit);
-		}
 	}
-	frac.setDen(strto<long>(buffer, i));
+	if (test)
+		frac.setDen(utlity::strto<long>(buffer, i));
+	else
+		frac.setDen(1);
 	frac = vFraction::setIrrational(frac);
 	return is;
 }
 inline void operator >> (const std::string& str, vFraction &frac)
 {
-	char buffer[50]{};
-	size_t i{ 0 };
-	for(auto temp : str)
-	{
-		if ((temp <= '9' && temp >= '0') || temp == '-')
-		{
-			buffer[i] = temp;
-			++i;
-		}
-		else if (temp == '/')
-		{
-			frac.setNum(strto<long>(buffer, i));
-			i = 0;
-		}
-	}
-	frac.setDen(strto<long>(buffer, i));
-	frac = vFraction::setIrrational(frac);
+	frac = vFraction(str);
+}
+inline void operator<<(vFraction &frac, const std::string &str)
+{
+	frac = vFraction(str);
 }
 inline vFraction operator+(const vFraction &frac1, const vFraction &frac2)
 {
@@ -394,49 +374,3 @@ inline bool operator<=(const vFraction  &frac1, const vFraction &frac2)
 	return (frac1 < frac2) || (frac1 == frac2);
 }
 
-
-template<class T>
-inline T strto(const char* str, const size_t &strlen)
-{
-	T temp{0};
-	if (str[0] != '-')
-	{
-		for (size_t i{ 0 }; i < strlen; ++i)
-		{
-			temp += (str[i] - '0')* pow<T, 10>((strlen - 1) - i);
-		}
-	}
-	else
-	{
-		for (size_t i{ 1 }; i < strlen; ++i)
-		{
-			temp += (str[i] - '0')* pow<T, 10>((strlen - 1) - i);
-		}
-		temp = -temp;
-	}
-	return temp;
-}
-template<class T,T x>
-T pow(size_t n)
-{
-	if (x == 0)
-	{
-		return T{ 0 };
-	}
-	else if (n == 0)
-	{
-		return T{ 1 };
-	}
-	else if (n == 1)
-	{
-		return T{ x };
-	}
-	else if(n%2 == 0)
-	{
-		return T{ pow<T, x*x>(n / 2) };
-	}
-	else
-	{
-		return T{ pow<T, x*x>(n / 2) * x };
-	}
-}
