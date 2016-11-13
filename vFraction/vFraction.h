@@ -105,6 +105,18 @@ public:
 		long gcd{ utlity::getGcd<long>(utlity::abs<long>(frac.den()),utlity::abs<long>(frac.num())) };
 		return vFraction(frac.num() / gcd, frac.den() / gcd);
 	}
+	static inline vFraction oposite(const vFraction &frac)
+	{
+		return vFraction(-frac.num(), frac.den());
+	}
+	inline vFraction oposite() const 
+	{
+		return vFraction(-m_num, m_den);
+	}
+	inline vFraction inverse() const 
+	{
+		return vFraction(m_den, m_num);
+	}
 	inline void setDen(const long &den) {
 		assert(den != 0);
 		if (den < 0)
@@ -372,5 +384,9 @@ inline bool operator>=(const vFraction &frac1, const vFraction &frac2)
 inline bool operator<=(const vFraction  &frac1, const vFraction &frac2)
 {
 	return (frac1 < frac2) || (frac1 == frac2);
+}
+inline vFraction operator-(const vFraction &frac)
+{
+	return frac.oposite();
 }
 

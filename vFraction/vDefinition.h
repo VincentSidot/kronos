@@ -1,6 +1,6 @@
 #pragma once
-#include "vFraction.h"
 #include "UsefullFunc.h"
+#include "vNumber.h"
 #include <string>
 #include <sstream>
 
@@ -20,8 +20,6 @@ private:
 };
 
 
-vNumber max_sinf("+inf");
-vNumber min_inf("-inf");
 
 class vIntervalle
 {
@@ -88,8 +86,8 @@ public:
 		return *this;
 	}
 private:
-	vFraction m_a;
-	vFraction m_b;
+	vNumber m_a;
+	vNumber m_b;
 	bool  m_aInclude;
 	bool m_bInclude;
 };
