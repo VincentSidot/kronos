@@ -1,4 +1,6 @@
 #pragma once
+#include "vFraction.h"
+
 class vDefinition
 {
 public:
@@ -21,6 +23,13 @@ public:
 
 
 private:
+	vFraction m_number;
+	bool m_isInt;
+	bool m_isNeg;
+	bool m_isInfinite;
+	bool m_isReal;
+	bool m_isrational;
+
 
 
 };
